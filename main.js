@@ -6,6 +6,7 @@ function createSignal(value){
         //Checking whether anyone listening this value
         //context is kind of stack pusing and poping
         const observer =  context[context.length - 1];
+        debugger;
         if(observer){
             subscription.add(observer);
         }
@@ -35,12 +36,12 @@ const [read,write] = createSignal(9);
 
 console.log(read());
 
-write(10);
-
 createEffect(()=>{
     console.log(read());
 })
 
+//Why this function is getting called without any deps or singal read
 createEffect(()=>{
-    console.log(read());
+    console.log('Why this being called without deps');
+    // console.log(read());
 })
