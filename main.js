@@ -6,7 +6,6 @@ function createSignal(value){
         //Checking whether anyone listening this value
         //context is kind of stack pusing and poping
         const observer =  context[context.length - 1];
-        debugger;
         if(observer){
             subscription.add(observer);
         }
@@ -25,7 +24,7 @@ function createEffect(fn){
     const effect = {
         execute(){
             context.push(effect);
-            fn();
+            fn(); //it will invoke create effect fn and invoke read at that point context will be there
             context.pop();
         }
     };
@@ -41,6 +40,7 @@ createEffect(()=>{
 })
 
 //Why this function is getting called without any deps or singal read
+//looks like effect will called at least once
 createEffect(()=>{
     console.log('Why this being called without deps');
     // console.log(read());
